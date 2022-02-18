@@ -47,9 +47,45 @@ function setSelectedValues(opts){
 }
 
 function getValue() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getActiveSheet();
-  const range = sheet.getRange("Skill!B2:B7");
-  const value = range.getValues();
+  const skillData = getSkill();
+  const companyData = getCompany();
+
+  const value = {skillData, companyData}
   return value;
+}
+
+function getSkill() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("Skill");
+  const skills = sheet.getRange("C2:C7");
+  let data = [];
+  for (let i = 0; i < skills.getValues().length; i++) {
+    let skill = {
+      name: "",
+    }
+    if (!!skills.getValues()[i][0]) {
+      skill.name = skills.getValues()[i][0];
+      data.push(skill);
+    }
+  }
+  return data;
+}
+
+function getCompany() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getSheetByName("workExpress");
+  const companies = sheet.getRange("B2:B7");
+  let data = [];
+  for (let i = 0; i < companies.getValues().length; i++) {
+    let company = {
+      name: "",
+      row: ""
+    }
+    if (!!companies.getValues()[i][0]) {
+      company.name = companies.getValues()[i][0];
+      company.row = companies.getCell(1 + i,1).getRow();
+      data.push(company);
+    }
+  }
+  return data;
 }

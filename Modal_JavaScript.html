@@ -7,29 +7,40 @@
   }
 
   function success(res) {
-    const list = document.getElementById("list");
-    for(var i=0;i<res.length;i++) {
-      let option = document.createElement("option");
-      option.text = res[i][0];   //テキスト値
-      list.appendChild(option);
-    }
+    const elmSkill = document.getElementById("skill");
+    const elmCompany = document.getElementById("company");
+    const skills = res.skillData;
+    const companies = res.companyData;
+    setOptions(elmSkill, skills);
+    setOptions(elmCompany, companies);
   }
 
   function failure (value) {
     console.log(`failure: ${value}`);
   }
 
-  function submit() {
-    const list = document.getElementById("list");
-    const cell = document.getElementById("cell");
-    const arr = [];
-    for ( const item of list ) {
-      if ( item.selected ) { arr.push(item.value); }
+  function setOptions(elm, data) {
+    for(const val of data) {
+      let option = document.createElement("option");
+      option.text = val.name;
+      if (!!val.row) {
+        option.value = val.row;
+      }
+      elm.appendChild(option);
     }
-    const cellId = cell.value;
+  }
+
+  function submit() {
+    const skills = document.querySelectorAll("#skill option");
+    const company = document.querySelector("#company option:checked");
+    const arrSkill = [];
+    for ( const skill of skills ) {
+      if ( skill.selected ) { arrSkill.push(skill.value); }
+    }
+    const cellId = `G${company.value}`;
     const opts = {
       cellId,
-      items: arr.join(",")
+      items: arrSkill.join(",")
       };
     google.script.run.setSelectedValues(opts);
     google.script.host.close();
