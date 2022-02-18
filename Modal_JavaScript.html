@@ -35,7 +35,7 @@
     const company = document.querySelector("#company option:checked");
     const arrSkill = [];
     for ( const skill of skills ) {
-      if ( skill.selected ) { arrSkill.push(skill.value); }
+      if ( skill.selected ) { arrSkill.push(skill.text); }
     }
     const cellId = `G${company.value}`;
     const opts = {

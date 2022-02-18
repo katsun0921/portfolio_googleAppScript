@@ -4,7 +4,7 @@ function init() {
   try{
     // 現在登録されているトリガー一覧を取得
     let triggers = ScriptApp.getProjectTriggers();
-    // "hoge" という関数がトリガーに登録されているかチェック
+    // FUNC_NAME という関数がトリガーに登録されているかチェック
     let target = triggers.findIndex(trigger => trigger.getHandlerFunction() === FUNC_NAME);
 
     if(target !== -1) {
@@ -47,44 +47,27 @@ function setSelectedValues(opts){
 }
 
 function getValue() {
-  const skillData = getSkill();
-  const companyData = getCompany();
+  const skillData = getCellData("Skill", "C2:C7");
+  const companyData = getCellData("workExpress", "B2:B7");
 
   const value = {skillData, companyData}
   return value;
 }
 
-function getSkill() {
+function getCellData(sheetName, cellRange) {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName("Skill");
-  const skills = sheet.getRange("C2:C7");
+  const sheet = spreadsheet.getSheetByName(sheetName);
+  const range = sheet.getRange(cellRange);
   let data = [];
-  for (let i = 0; i < skills.getValues().length; i++) {
-    let skill = {
-      name: "",
-    }
-    if (!!skills.getValues()[i][0]) {
-      skill.name = skills.getValues()[i][0];
-      data.push(skill);
-    }
-  }
-  return data;
-}
-
-function getCompany() {
-  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  const sheet = spreadsheet.getSheetByName("workExpress");
-  const companies = sheet.getRange("B2:B7");
-  let data = [];
-  for (let i = 0; i < companies.getValues().length; i++) {
-    let company = {
+  for (let i = 0; i < range.getValues().length; i++) {
+    let cell = {
       name: "",
       row: ""
     }
-    if (!!companies.getValues()[i][0]) {
-      company.name = companies.getValues()[i][0];
-      company.row = companies.getCell(1 + i,1).getRow();
-      data.push(company);
+    if (!!range.getValues()[i][0]) {
+      cell.name = range.getValues()[i][0];
+      cell.row = range.getCell(1 + i,1).getRow();
+      data.push(cell);
     }
   }
   return data;
