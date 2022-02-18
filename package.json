@@ -1,0 +1,26 @@
+{
+  "name": "portfolio_googleappscript",
+  "version": "1.0.0",
+  "description": "Google App Script for Portfolio",
+  "main": "index.js",
+  "scripts": {
+    "login": "clasp login --no-localhost",
+    "push": "clasp push",
+    "pull": "clasp pull"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katsun0921/portfolio_googleAppScript.git"
+  },
+  "keywords": [],
+  "author": "katsumasa-sato",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/katsun0921/portfolio_googleAppScript/issues"
+  },
+  "homepage": "https://github.com/katsun0921/portfolio_googleAppScript#readme",
+  "dependencies": {
+    "@google/clasp": "^2.4.1",
+    "@types/google-apps-script": "^1.0.45"
+  }
+}
