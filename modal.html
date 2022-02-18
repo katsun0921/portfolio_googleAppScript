@@ -20,7 +20,20 @@
   </div>
   <script>
     window.onload = function() {
+      google.script.run
+      .withSuccessHandler(success)// 成功時のハンドラ
+      .withFailureHandler(failure) // 失敗時のハンドラ
+      .getValue();
     }
+
+    function success(value) {
+      console.log(value);
+    }
+
+    function failure (value) {
+      console.log(`failure: ${value}`);
+    }
+
     function submit() {
       const list = document.getElementById("list");
       const cell = document.getElementById("cell");

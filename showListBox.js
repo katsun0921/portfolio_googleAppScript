@@ -40,3 +40,10 @@ function setSelectedValues(opts){
   const sheet = spreadsheet.getActiveSheet();
   sheet.getRange(opts.cellId).setValue(opts.items);
 }
+
+function getValue() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = spreadsheet.getActiveSheet();
+  var value = "hello";
+  return value;
+}
