@@ -2,6 +2,7 @@
 <html>
   <head>
     <base target="_top">
+    <?!= include('Modal_Stylesheet'); ?>
   </head>
   <body>
     <div>
@@ -18,37 +19,6 @@
   <div>
     <button onclick="submit()">決定</button>
   </div>
-  <script>
-    window.onload = function() {
-      google.script.run
-      .withSuccessHandler(success)// 成功時のハンドラ
-      .withFailureHandler(failure) // 失敗時のハンドラ
-      .getValue();
-    }
-
-    function success(value) {
-      console.log(value);
-    }
-
-    function failure (value) {
-      console.log(`failure: ${value}`);
-    }
-
-    function submit() {
-      const list = document.getElementById("list");
-      const cell = document.getElementById("cell");
-      const arr = [];
-      for ( const item of list ) {
-        if ( item.selected ) { arr.push(item.value); }
-      }
-      const cellId = cell.value;
-      const opts = {
-        cellId,
-        items: arr.join(",")
-        };
-      google.script.run.setSelectedValues(opts);
-      google.script.host.close();
-    }
-  </script>
+  <?!= include('Modal_JavaScript'); ?>
   </body>
 </html>

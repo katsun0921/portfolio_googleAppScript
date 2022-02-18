@@ -26,12 +26,17 @@ function init() {
   }
 }
 
-function doGet(pageName) {
-  return HtmlService.createTemplateFromFile(pageName).evaluate();
+function doGet(fileName) {
+  return HtmlService.createTemplateFromFile(fileName).evaluate();
+}
+
+function include(filename) {
+  return HtmlService.createHtmlOutputFromFile(filename)
+      .getContent();
 }
 
 function showListBox(){
-  const html = HtmlService.createHtmlOutput(doGet("modal"));
+  const html = HtmlService.createHtmlOutput(doGet("Modal"));
   SpreadsheetApp.getUi().showModalDialog(html, "選択してください");
 }
 
@@ -44,6 +49,7 @@ function setSelectedValues(opts){
 function getValue() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = spreadsheet.getActiveSheet();
-  var value = "hello";
+  const range = sheet.getRange("Skill!B2:B7");
+  const value = range.getValues();
   return value;
 }
