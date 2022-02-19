@@ -5,11 +5,14 @@
     <?!= include('Modal_Stylesheet'); ?>
   </head>
   <body>
+    <h1>会社にスキルをセットします</h1>
     <div>
-      <select id="skill" multiple></select>
+      <h2>スキルをセットする会社を選択</h2>
+      <ul id="company" class="list"></ul>
     </div>
     <div>
-      <select id="company" required></select>
+      <h2>スキルをセットする言語</h2>
+      <ul id="skill" class="list"></ul>
     </div>
   <div>
     <button onclick="submit()">決定</button>

@@ -1,4 +1,7 @@
 <script>
+  const COMPANY = "company";
+  const SKILL = "skill";
+
   window.onload = function() {
     const value = google.script.run
     .withSuccessHandler(success)// 成功時のハンドラ
@@ -7,37 +10,53 @@
   }
 
   function success(res) {
-    const elmSkill = document.getElementById("skill");
-    const elmCompany = document.getElementById("company");
+    const elmSkill = document.getElementById(SKILL);
+    const elmCompany = document.getElementById(COMPANY);
     const skills = res.skillData;
     const companies = res.companyData;
-    setOptions(elmSkill, skills);
-    setOptions(elmCompany, companies);
+    setLists(elmSkill, skills, SKILL);
+    setLists(elmCompany, companies, COMPANY);
   }
 
   function failure (value) {
-    console.log(`failure: ${value}`);
+    alert("失敗しました", value);
   }
 
-  function setOptions(elm, data) {
-    for(const val of data) {
-      let option = document.createElement("option");
-      option.text = val.name;
-      if (!!val.row) {
-        option.value = val.row;
+  function setLists(elm, data, type) {
+    for(let i = 0; i < data.length; i++) {
+      let li = document.createElement("li");
+      let label = document.createElement("label");
+      let input = document.createElement("input");
+
+      switch(type) {
+        case SKILL:
+          input.type = "checkbox";
+          input.name = SKILL;
+          input.value = data[i].name;
+          break;
+        case COMPANY:
+          input.type = "radio";
+          input.name = COMPANY;
+          input.value = data[i].row;
+          break;
+        default:
+          break;
       }
-      elm.appendChild(option);
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(data[i].name));
+      li.appendChild(label);
+      elm.appendChild(li);
     }
   }
 
   function submit() {
-    const skills = document.querySelectorAll("#skill option");
-    const company = document.querySelector("#company option:checked");
+    const skills = document.querySelectorAll("#skill input:checked");
+    const company = document.querySelector("#company input:checked");
     const arrSkill = [];
     for ( const skill of skills ) {
-      if ( skill.selected ) { arrSkill.push(skill.text); }
+      arrSkill.push(skill.value);
     }
-    const cellId = `G${company.value}`;
+    const cellId = `H${company.value}`;
     const opts = {
       cellId,
       items: arrSkill.join(",")
