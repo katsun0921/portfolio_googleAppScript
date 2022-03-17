@@ -19,8 +19,8 @@ function setSelectedValues(opts){
 }
 
 function getValue() {
-  const skillData = getCellData("Skill", "C2:C7");
-  const companyData = getCellData("workExpress", "B2:B7");
+  const skillData = getCellData("Skill", "C2:C30");
+  const companyData = getCellData("workExpress", "B2:B20");
 
   const value = {skillData, companyData}
   return value;
